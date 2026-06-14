@@ -59,3 +59,87 @@ Docker Desktop (With a free Docker Hub account)
 Azure CLI
 
 Terraform CLI (v1.6.0+)
+
+🛠️ Step-by-Step Implementation Guide
+
+1. Build and Push the Docker Container
+
+The custom web application runs inside a lightweight, highly optimized Nginx container.
+
+From your VS Code Terminal:
+
+# Log in to your Docker Hub account
+docker login
+
+# Build your custom Docker container 
+docker build -t your_dockerhub_username/cloudscale-app:v1 .
+
+# Push your image to Docker Hub
+docker push your_dockerhub_username/cloudscale-app:v1
+
+
+2. Configure Terraform Local Variables
+
+Open variables.tf and edit the default values to reflect your environments:
+
+location: Set to "swedencentral" (Sweden Central region) to align with subscription compliance.
+
+docker_image: Set to your pushed Docker Hub image (your_dockerhub_username/cloudscale-app:v1).
+
+Open providers.tf and input your unique storage account name:
+
+storage_account_name: Update with the unique tfstate%RANDOM% storage account name created in Azure.
+
+3. Local Verification (Dry-Run)
+
+Authenticate your VS Code terminal and test the configuration:
+
+# Log in to the target subscription
+az login --tenant 4fe2d575-cf04-436d-9781-64d8a5907409
+
+# Fetch and secure access to your state storage account
+set ARM_ACCESS_KEY=your_retrieved_storage_account_key
+
+# Initialize and preview deployment
+terraform init -reconfigure
+terraform plan
+
+
+🚀 GitHub Actions CI/CD Pipeline
+
+The integration and deployment processes are fully automated using a multi-stage GitHub Actions workflow.
+
+Required GitHub Repository Secrets
+
+Navigate to Settings -> Secrets and variables -> Actions in your GitHub repo and configure the following variables:
+
+AZURE_CLIENT_ID: Your Azure Service Principal Application ID.
+
+AZURE_CLIENT_SECRET: Your Azure Service Principal Secret Key.
+
+AZURE_TENANT_ID: Your Directory Tenant ID.
+
+AZURE_SUBSCRIPTION_ID: Your Target Azure Subscription ID.
+
+Pipeline Stages
+
+Pull Request Trigger:
+
+Runs Terraform Init and Terraform Plan as an automated check on any pull request targeting the main branch.
+
+This provides a risk-free review of what infrastructure will change.
+
+Merge / Push Trigger (Production Deployment):
+
+Triggers on a direct push or merge to the main branch.
+
+Prompts the Manual Approval Gate requiring a review from designated repository collaborators.
+
+Once approved, runs Terraform Apply to provision the containerized environment on Azure.
+
+🧹 Infrastructure Cleanup
+
+To prevent ongoing consumption of your Azure student credit balance, tear down the container deployment once evaluated:
+
+# Destroy cloud-hosted compute instances
+terraform destroy -auto-approve
