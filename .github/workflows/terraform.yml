@@ -1,15 +1,12 @@
 name: 'Terraform CI/CD Pipeline'
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 permissions:
   contents: read
   pull-requests: write
-
 jobs:
   terraform-plan:
     name: 'Terraform Plan'
@@ -17,25 +14,29 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
-
     - name: Terraform Init
       run: terraform init
       env:
-        ARM_CLIENT_ID: "de021fdd-06ac-413f-b247-0868fad8089c"
-        ARM_CLIENT_SECRET: "1GC8Q~AzmZAMKZxCKX2cZ7IH50SEldEEidFlXawz"
-        ARM_SUBSCRIPTION_ID: "61e822a8-758e-427e-9026-e3b5d46fdd22"
-        ARM_TENANT_ID: "a8a6d952-dc1e-4b83-97e1-18ff70df777f"
-
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
     - name: Terraform Plan
       run: terraform plan -input=false
       env:
+<<<<<<< HEAD
         ARM_CLIENT_ID: "de021fdd-06ac-413f-b247-0868fad8089c"
         ARM_CLIENT_SECRET: "1GC8Q~AzmZAMKZxCKX2cZ7IH50SEldEEidFlXawz"
         ARM_SUBSCRIPTION_ID: "61e822a8-758e-427e-9026-e3b5d46fdd22"
         ARM_TENANT_ID: "a8a6d952-dc1e-4b83-97e1-18ff70df777f"
+=======
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+>>>>>>> 76e4c31 (fix: use GitHub Secrets for Azure credentials)
 
   terraform-apply:
     name: 'Terraform Apply'
@@ -43,26 +44,30 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production
-    
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
-
     - name: Terraform Init
       run: terraform init
       env:
-        ARM_CLIENT_ID: "de021fdd-06ac-413f-b247-0868fad8089c"
-        ARM_CLIENT_SECRET: "1GC8Q~AzmZAMKZxCKX2cZ7IH50SEldEEidFlXawz"
-        ARM_SUBSCRIPTION_ID: "61e822a8-758e-427e-9026-e3b5d46fdd22"
-        ARM_TENANT_ID: "a8a6d952-dc1e-4b83-97e1-18ff70df777f"
-
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false
       env:
+<<<<<<< HEAD
         ARM_CLIENT_ID: "de021fdd-06ac-413f-b247-0868fad8089c"
         ARM_CLIENT_SECRET: "1GC8Q~AzmZAMKZxCKX2cZ7IH50SEldEEidFlXawz"
         ARM_SUBSCRIPTION_ID: "61e822a8-758e-427e-9026-e3b5d46fdd22"
         ARM_TENANT_ID: "a8a6d952-dc1e-4b83-97e1-18ff70df777f"
+=======
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+>>>>>>> 76e4c31 (fix: use GitHub Secrets for Azure credentials)
