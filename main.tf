@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   name     = "-proj2-aci-rg"
-  location = var.location
+  location = "swedencentral" # 👈 تم وضع السويد هنا مباشرة
 
   tags = {
     Project     = "Project2"
@@ -11,7 +11,7 @@ resource "azurerm_resource_group" "rg" {
 
 resource "azurerm_container_group" "aci" {
   name                = "-aci-group"
-  location            = azurerm_resource_group.rg.location
+  location            = azurerm_resource_group.rg.location # سيأخذ "swedencentral" تلقائياً من الـ RG
   resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
   dns_name_label      = "-cloudscale-app"
