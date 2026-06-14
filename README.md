@@ -1,4 +1,8 @@
 Project 2: CloudScale Container Deployment with Terraform & GitHub Actions CI/CD
+By : 
+Muez Fathy - 4801
+Mohamed Bengdara - 4909
+Eslam Al Madany - 5074
 
 An automated, highly scalable cloud infrastructure deployment featuring a containerized web application hosted on Azure Container Instances (ACI). The entire lifecycle is managed using Terraform for Infrastructure as Code (IaC) and GitHub Actions for the Continuous Integration and Continuous Deployment (CI/CD) pipeline, incorporating a production environment gate with manual approval.
 
