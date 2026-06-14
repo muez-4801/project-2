@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "muez-proj2-aci-rg" # 👈 تم تغيير الاسم ليصبح فريداً وجديداً تماماً
-  location = "swedencentral"      # 👈 موقع السويد جاهز ومثبت هنا
+  name     = "muez-proj2-aci-rg"
+  location = "swedencentral"
 
   tags = {
     Project     = "Project2"
@@ -10,16 +10,16 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_group" "aci" {
-  name                = "muez-aci-group" # 👈 تم إزالة الشرطة من البداية وتغيير الاسم
+  name                = "muez-aci-group"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
-  dns_name_label      = "muez-cloudscale-app" # 👈 اسم الـ DNS أصبح فريداً ونظيفاً لكي يقبله Azure
+  dns_name_label      = "muez-cloudscale-app"
   os_type             = "Linux"
 
   container {
     name   = "webserver"
-    image  = var.docker_image
+    image  = "nginx:latest" # 👈 عدلها هنا واكتبها نصاً صريحاً هكذا
     cpu    = "0.5"
     memory = "1.5"
 
