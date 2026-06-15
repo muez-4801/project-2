@@ -28,14 +28,6 @@ resource "azurerm_container_group" "aci" {
       protocol = "TCP"
     }
 
-    # 👈 الأسطر القادمة تقوم بمسح الصفحة الافتراضية وكتابة صفحتك الخاصة فوراً!
-    commands = [
-      "/bin/sh",
-      "-c",
-      "echo '<h1>Welcome to CloudScale App</h1><p>Student Name: Muez Islam  Mohammed</p><p>Project 2 is Running Successfully!</p>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
-    ]
-  }
-
   tags = {
     Project     = "Project2"
     Environment = "production"
