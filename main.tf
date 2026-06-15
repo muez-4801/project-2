@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "muez-final-project2-rg" # 👈 اسم جديد كلياً وغير مكرر نهائياً
+  name     = "muez-final-project2-rg"
   location = "swedencentral"
 
   tags = {
@@ -10,14 +10,14 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_group" "aci" {
-  name                = "muez-final-aci-group" # 👈 اسم جديد للحاوية
+  name                = "muez-final-aci-group"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
-  dns_name_label      = "muez-final-cloudscale-app" # 👈 اسم ويب فريد وجديد
+  dns_name_label      = "muez-final-cloudscale-app"
   os_type             = "Linux"
 
- container {
+  container {
     name   = "webserver"
     image  = "nginx:latest"
     cpu    = "0.5"
@@ -27,6 +27,7 @@ resource "azurerm_container_group" "aci" {
       port     = 80
       protocol = "TCP"
     }
+  }
 
   tags = {
     Project     = "Project2"
