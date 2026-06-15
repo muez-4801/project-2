@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "muez-final-project2-rg" # 👈 اسم جديد كلياً وغير مكرر نهائياً
+  name     = "muez-v3-project2-rg" # 👈 اسم جديد كلياً لتفادي خطأ "already exists"
   location = "swedencentral"
 
   tags = {
@@ -10,16 +10,16 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_group" "aci" {
-  name                = "muez-final-aci-group" # 👈 اسم جديد للحاوية
+  name                = "muez-v3-aci-group" # 👈 اسم جديد تماماً للحاوية
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   ip_address_type     = "Public"
-  dns_name_label      = "muez-final-cloudscale-app" # 👈 اسم ويب فريد وجديد
+  dns_name_label      = "muez-v3-cloudscale-app" # 👈 اسم ويب فريد وجديد كلياً
   os_type             = "Linux"
 
   container {
     name   = "webserver"
-    image  = "nginx:latest" # 👈 مثبتة هنا رسمياً ومباشرة لتجنب الشاشة البيضاء
+    image  = "nginx:latest" # 👈 النسخة الرسمية والمستقرة لعرض صفحة الويب مباشرة
     cpu    = "0.5"
     memory = "1.5"
 
