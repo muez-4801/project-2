@@ -17,9 +17,9 @@ resource "azurerm_container_group" "aci" {
   dns_name_label      = "muez-final-cloudscale-app" # 👈 اسم ويب فريد وجديد
   os_type             = "Linux"
 
-  container {
+ container {
     name   = "webserver"
-    image  = "nginx:latest" # 👈 مثبتة هنا رسمياً ومباشرة لتجنب الشاشة البيضاء
+    image  = "nginx:latest"
     cpu    = "0.5"
     memory = "1.5"
 
@@ -27,6 +27,13 @@ resource "azurerm_container_group" "aci" {
       port     = 80
       protocol = "TCP"
     }
+
+    # 👈 الأسطر القادمة تقوم بمسح الصفحة الافتراضية وكتابة صفحتك الخاصة فوراً!
+    commands = [
+      "/bin/sh",
+      "-c",
+      "echo '<h1>Welcome to CloudScale App</h1><p>Student Name: Muez Islam  Mohammed</p><p>Project 2 is Running Successfully!</p>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+    ]
   }
 
   tags = {
